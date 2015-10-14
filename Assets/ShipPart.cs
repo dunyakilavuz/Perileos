@@ -10,12 +10,13 @@ public class ShipPart : MonoBehaviour
 	public UtilityPart utilityPart = new UtilityPart();
 
 	float mass;
-	Vector3 attachmentPoint;
+	public Vector2 attachmentPointUp;
+	public Vector2 attachmentPointDown;
 
 	public class CommandModule
 	{
 		int crewCapacity;
-		public float electricCharge;
+		float electricCharge;
 	}
 
 	public class FuelTank
@@ -38,7 +39,13 @@ public class ShipPart : MonoBehaviour
 	{
 
 	}
-
-
+	
+	void Update()
+	{
+		attachmentPointUp.x = transform.position.x;
+		attachmentPointUp.y = transform.position.y + transform.localScale.y / 2;
+		attachmentPointDown.x = transform.position.x;
+		attachmentPointDown.y = transform.position.y - transform.localScale.y / 2;
+	}
 
 }
