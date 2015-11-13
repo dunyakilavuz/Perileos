@@ -3,9 +3,6 @@ using System.Collections;
 
 public class SpaceShip : MonoBehaviour 
 {
-
-
-
 	void Start () 
 	{
 	

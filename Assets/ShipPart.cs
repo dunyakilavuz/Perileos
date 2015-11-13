@@ -9,9 +9,16 @@ public class ShipPart : MonoBehaviour
 	public Decoupler decoupler = new Decoupler();
 	public UtilityPart utilityPart = new UtilityPart();
 
+	[SerializeField]
+	string partName;
 	float mass;
-	public Vector2 attachmentPointUp;
-	public Vector2 attachmentPointDown;
+	public Vector2 attachPointUp;
+	public Vector2 attachPointDown;
+	public Vector2 attachPointRight;
+	public Vector2 attachPointLeft;
+	public bool canAttachUp = true;
+	public bool canAttachDown = true;
+	bool isSelected = false;
 
 	public class CommandModule
 	{
@@ -39,13 +46,30 @@ public class ShipPart : MonoBehaviour
 	{
 
 	}
-	
-	void Update()
+
+	void Start()
 	{
-		attachmentPointUp.x = transform.position.x;
-		attachmentPointUp.y = transform.position.y + transform.localScale.y / 2;
-		attachmentPointDown.x = transform.position.x;
-		attachmentPointDown.y = transform.position.y - transform.localScale.y / 2;
+
 	}
 
+	void Update()
+	{
+
+	}
+
+	public bool IsSelected()
+	{
+		return isSelected;
+	}
+
+	public void select()
+	{
+		isSelected = true;
+	}
+
+	public void deselect()
+	{
+		isSelected = false;
+	}
+	
 }
