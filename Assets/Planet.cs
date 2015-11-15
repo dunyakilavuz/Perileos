@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Planet : MonoBehaviour 
 {
-	Atmosphere atmosphere = new Atmosphere();
+	Atmosphere atmosphere;
 
 	Vector2 gravityVector;
 	[SerializeField]

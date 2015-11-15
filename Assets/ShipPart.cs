@@ -12,12 +12,10 @@ public class ShipPart : MonoBehaviour
 	[SerializeField]
 	string partName;
 	float mass;
-	public Vector2 attachPointUp;
-	public Vector2 attachPointDown;
-	public Vector2 attachPointRight;
-	public Vector2 attachPointLeft;
-	public bool canAttachUp = true;
-	public bool canAttachDown = true;
+
+	AttachPoint down;
+	AttachPoint up;
+
 	bool isSelected = false;
 
 	public class CommandModule
@@ -49,7 +47,8 @@ public class ShipPart : MonoBehaviour
 
 	void Start()
 	{
-
+		up = new AttachPoint(new Vector3(transform.position.x,transform.position.y + transform.localScale.y / 2),this);
+		down = new AttachPoint (new Vector3(transform.position.x,transform.position.y - transform.localScale.y / 2),this);
 	}
 
 	void Update()
