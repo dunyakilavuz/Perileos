@@ -5,13 +5,9 @@ using System.Collections.Generic;
 public class VehicleAssembly : MonoBehaviour 
 {
 	ShipPart focusedPart;
-	[SerializeField]
-	float attachDistance = 1;
-	Vector2 attachPoint;
 	Ray ray;
 	RaycastHit rayCastHit;
-	[SerializeField]
-	bool attachingMode;
+	public bool attachingMode;
 
 	void Start () 
 	{
