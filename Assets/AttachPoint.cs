@@ -46,13 +46,21 @@ public class AttachPoint : MonoBehaviour
 
 	void Update()
 	{
-		if (otherAttachPoint != null)
+		if (otherAttachPoint != null && transform.parent.GetComponent<ShipPart>().IsAttached() == false)
 		{
 			if(Input.GetMouseButtonUp(0) == true && transform.parent.GetComponent<ShipPart>().IsSelected() == true)
 			{
 				Attach();
-			}
+                transform.parent.GetComponent<ShipPart>().attach();
+
+            }
 		}
+
+        if (transform.parent.GetComponent<ShipPart>().IsSelected() == true && transform.parent.GetComponent<ShipPart>().IsAttached() == true)
+        {
+            Detach();
+            transform.parent.GetComponent<ShipPart>().detach();
+        }
 	}
 
 	void Attach()
@@ -61,13 +69,24 @@ public class AttachPoint : MonoBehaviour
 		transform.parent.GetComponent<ShipPart>().deselect();
 		AssemblyManager.GetComponent<VehicleAssembly> ().attachingMode = false;
         transform.parent.parent = otherAttachPoint.transform.parent;
-        otherAttachPoint.gameObject.SetActive(false);
-        gameObject.SetActive(false);
-	}
+        otherAttachPoint.gameObject.GetComponent<AttachPoint>().shouldActivate(false);
+        gameObject.GetComponent<AttachPoint>().shouldActivate(false);
+    }
 
 	void Detach()
 	{
+        otherAttachPoint.gameObject.GetComponent<AttachPoint>().shouldActivate(true);
+        gameObject.GetComponent<AttachPoint>().shouldActivate(true);
+        transform.parent.parent = null;
+        AssemblyManager.GetComponent<VehicleAssembly>().attachingMode = true;
+    }
 
-	}
+    public void shouldActivate(bool value)
+    {
+        // We cant simply use SetActive function of gameobject class simply because it disables the objects update function.
+        gameObject.GetComponent<MeshRenderer>().enabled = value;
+        gameObject.GetComponent<SphereCollider>().enabled = value;
+        halo.enabled = value;
+    }
 
 }

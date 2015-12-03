@@ -11,7 +11,7 @@ public class ShipPart : MonoBehaviour
 	AttachPoint up;
 	[SerializeField]
 	bool isSelected = false;
-    public bool isAttached = false;
+    bool isAttached = false;
 
 	void Start()
 	{
@@ -43,6 +43,15 @@ public class ShipPart : MonoBehaviour
 	{
 		isSelected = false;
 	}
+
+    public void attach()
+    {
+        isAttached = true;
+    }
+    public void detach()
+    {
+        isAttached = false;
+    }
 
 	
 }
