@@ -6,6 +6,9 @@ public class AttachPoint : MonoBehaviour
 	AttachPoint otherAttachPoint;
 	Behaviour halo;
 	GameObject AssemblyManager;
+    Vector3 newPosition;
+
+    public bool isAttached;
 
 	public AttachPoint(Vector3 position,ShipPart myParent)
 	{
@@ -20,11 +23,12 @@ public class AttachPoint : MonoBehaviour
 	{
 		halo = (Behaviour)GetComponent("Halo");
 		AssemblyManager = GameObject.Find ("Assembly Manager");
+        isAttached = false;
 	}
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.name == "attachPoint(Clone)")
+		if (other.GetComponent<AttachPoint>() != null)
 		{
 			otherAttachPoint = other.GetComponent<AttachPoint>();
 			otherAttachPoint.halo.enabled = true;	
@@ -34,7 +38,7 @@ public class AttachPoint : MonoBehaviour
 
 	void OnTriggerExit(Collider other)
 	{
-		if (other.name == "attachPoint(Clone)")
+		if (other.GetComponent<AttachPoint>() != null)
 		{
 			if(otherAttachPoint != null)
 			{
@@ -46,39 +50,53 @@ public class AttachPoint : MonoBehaviour
 
 	void Update()
 	{
-		if (otherAttachPoint != null && transform.parent.GetComponent<ShipPart>().IsAttached() == false)
-		{
-			if(Input.GetMouseButtonUp(0) == true && transform.parent.GetComponent<ShipPart>().IsSelected() == true)
-			{
-				Attach();
-                transform.parent.GetComponent<ShipPart>().attach();
-
-            }
-		}
-
-        if (transform.parent.GetComponent<ShipPart>().IsSelected() == true && transform.parent.GetComponent<ShipPart>().IsAttached() == true)
+        if (Input.GetMouseButtonUp(0) == true && transform.parent.GetComponent<ShipPart>().IsSelected() == true && otherAttachPoint != null)
         {
-            Detach();
-            transform.parent.GetComponent<ShipPart>().detach();
+            if (isAttached == false)
+            {
+                Attach();
+            }
+            else if (isAttached == true && transform.parent.GetComponent<ShipPart>().IsRoot() == false && transform.parent.parent != null)
+            {
+                Detach();
+            }
         }
 	}
 
 	void Attach()
 	{
-        transform.parent.position = otherAttachPoint.transform.position + ((otherAttachPoint.transform.localPosition - transform.localPosition));
+        if (otherAttachPoint.transform.position.y < otherAttachPoint.transform.parent.position.y)
+        {
+            newPosition = otherAttachPoint.transform.position;
+            newPosition -= new Vector3(0, transform.parent.localScale.y / 2, 0);
+        }
+        else
+        {
+            newPosition = otherAttachPoint.transform.position;
+            newPosition += new Vector3(0, transform.parent.localScale.y / 2, 0);
+        }
+
+        transform.parent.position = newPosition;
 		transform.parent.GetComponent<ShipPart>().deselect();
 		AssemblyManager.GetComponent<VehicleAssembly> ().attachingMode = false;
         transform.parent.parent = otherAttachPoint.transform.parent;
         otherAttachPoint.gameObject.GetComponent<AttachPoint>().shouldActivate(false);
         gameObject.GetComponent<AttachPoint>().shouldActivate(false);
+        transform.GetComponent<AttachPoint>().isAttached = true;
+        otherAttachPoint.transform.GetComponent<AttachPoint>().isAttached = true;
     }
 
 	void Detach()
 	{
-        otherAttachPoint.gameObject.GetComponent<AttachPoint>().shouldActivate(true);
-        gameObject.GetComponent<AttachPoint>().shouldActivate(true);
         transform.parent.parent = null;
+        gameObject.GetComponent<AttachPoint>().shouldActivate(true);
+        otherAttachPoint.gameObject.GetComponent<AttachPoint>().shouldActivate(true);
         AssemblyManager.GetComponent<VehicleAssembly>().attachingMode = true;
+        transform.GetComponent<AttachPoint>().isAttached = false;
+        otherAttachPoint.transform.GetComponent<AttachPoint>().isAttached = false;
+       
+        Debug.Log("Detached " + transform.parent.gameObject.name + " from " + otherAttachPoint.transform.parent.gameObject.name);
+
     }
 
     public void shouldActivate(bool value)

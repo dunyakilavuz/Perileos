@@ -10,8 +10,8 @@ public class ShipPart : MonoBehaviour
 	AttachPoint down;
 	AttachPoint up;
 	[SerializeField]
+    bool isRoot = false;
 	bool isSelected = false;
-    bool isAttached = false;
 
 	void Start()
 	{
@@ -29,9 +29,9 @@ public class ShipPart : MonoBehaviour
 		return isSelected;
 	}
 
-    public bool IsAttached()
+    public bool IsRoot()
     {
-        return isAttached;
+        return isRoot;
     }
 
     public void select()
@@ -44,13 +44,13 @@ public class ShipPart : MonoBehaviour
 		isSelected = false;
 	}
 
-    public void attach()
+    public void makeRoot()
     {
-        isAttached = true;
+        isRoot = true;
     }
-    public void detach()
+    public void revokeRoot()
     {
-        isAttached = false;
+        isRoot = false;
     }
 
 	

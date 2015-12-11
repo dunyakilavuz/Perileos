@@ -17,7 +17,9 @@ public class VehicleAssembly : MonoBehaviour
 	void Update ()
 	{
 		partSelection ();
+
 	}
+
 
 	void partSelection()
 	{
@@ -27,10 +29,12 @@ public class VehicleAssembly : MonoBehaviour
 
 			if(Physics.Raycast(ray, out rayCastHit) == true)
 			{
-				focusedPart = rayCastHit.collider.gameObject.GetComponent<ShipPart>();
-				focusedPart.select();
-				attachingMode = true;
-
+                if (rayCastHit.collider.gameObject.GetComponent<ShipPart>() != null)
+                {
+				    focusedPart = rayCastHit.collider.gameObject.GetComponent<ShipPart>();
+				    focusedPart.select();
+				    attachingMode = true;
+                }
 			}
 		}
 
