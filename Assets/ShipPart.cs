@@ -12,6 +12,7 @@ public class ShipPart : MonoBehaviour
 	[SerializeField]
     bool isRoot = false;
 	bool isSelected = false;
+	Vector3 locatedInShip;
 
 	void Start()
 	{

@@ -5,23 +5,26 @@ using System.Collections.Generic;
 public class VehicleAssembly : MonoBehaviour 
 {
 	ShipPart focusedPart;
+	public ShipPart rootPart;
 	Ray ray;
 	RaycastHit rayCastHit;
 	public bool attachingMode;
+	public SpaceShip spaceShip;
 
 	void Start () 
 	{
-
+		spaceShip = new SpaceShip();
+		spaceShip.shipParts.Add (rootPart);
 	}
 
 	void Update ()
 	{
-		partSelection ();
+		PartSelection ();
 
 	}
 
 
-	void partSelection()
+	void PartSelection()
 	{
 		if (Input.GetMouseButtonUp (0) == true && attachingMode == false)
 		{	
@@ -50,5 +53,14 @@ public class VehicleAssembly : MonoBehaviour
 		}
 	}
 
+	public void Save()
+	{
+		Debug.Log ("Save button clicked.");
+		
+	}
 
+	public void Load()
+	{
+		Debug.Log ("Load button clicked.");
+	}
 }

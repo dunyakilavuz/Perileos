@@ -84,6 +84,8 @@ public class AttachPoint : MonoBehaviour
         gameObject.GetComponent<AttachPoint>().shouldActivate(false);
         transform.GetComponent<AttachPoint>().isAttached = true;
         otherAttachPoint.transform.GetComponent<AttachPoint>().isAttached = true;
+		AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Add (transform.parent.GetComponent<ShipPart>());
+		Debug.Log("SpaceShip: " + AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Count);
     }
 
 	void Detach()
@@ -94,7 +96,8 @@ public class AttachPoint : MonoBehaviour
         AssemblyManager.GetComponent<VehicleAssembly>().attachingMode = true;
         transform.GetComponent<AttachPoint>().isAttached = false;
         otherAttachPoint.transform.GetComponent<AttachPoint>().isAttached = false;
-       
+		AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Remove (transform.parent.GetComponent<ShipPart>());
+		Debug.Log("SpaceShip: " + AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Count);
         Debug.Log("Detached " + transform.parent.gameObject.name + " from " + otherAttachPoint.transform.parent.gameObject.name);
 
     }
