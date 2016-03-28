@@ -7,16 +7,19 @@ public class AttachPoint : MonoBehaviour
 	Behaviour halo;
 	GameObject AssemblyManager;
     Vector3 newPosition;
+	string myName;
 
     public bool isAttached;
 
-	public AttachPoint(Vector3 position,ShipPart myParent)
+	public AttachPoint(Vector3 position,ShipPart myParent, string name)
 	{
 		GameObject attachPoint = (GameObject)Instantiate(Resources.Load("attachPoint"));
 		attachPoint.transform.position = position;
 		attachPoint.transform.localScale = 
 			new Vector3(myParent.transform.localScale.x / 1.5f,myParent.transform.localScale.x / 1.5f,myParent.transform.localScale.x / 1.5f);
 		attachPoint.transform.parent = myParent.transform;
+		myName = name;
+		attachPoint.name = "attachPoint(" + myName + ")";
 	}
 
 	void Start()
@@ -85,6 +88,7 @@ public class AttachPoint : MonoBehaviour
         transform.GetComponent<AttachPoint>().isAttached = true;
         otherAttachPoint.transform.GetComponent<AttachPoint>().isAttached = true;
 		AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Add (transform.parent.GetComponent<ShipPart>());
+
 		Debug.Log("SpaceShip: " + AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Count);
     }
 

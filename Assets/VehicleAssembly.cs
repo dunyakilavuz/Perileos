@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class VehicleAssembly : MonoBehaviour 
 {
-	ShipPart focusedPart;
+	public ShipPart focusedPart;
 	public ShipPart rootPart;
 	Ray ray;
 	RaycastHit rayCastHit;

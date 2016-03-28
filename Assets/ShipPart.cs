@@ -6,7 +6,6 @@ public class ShipPart : MonoBehaviour
 
 	string partName;
 	float mass;
-
 	AttachPoint down;
 	AttachPoint up;
 	[SerializeField]
@@ -16,8 +15,8 @@ public class ShipPart : MonoBehaviour
 
 	void Start()
 	{
-		up = new AttachPoint(new Vector3(transform.position.x,transform.position.y + transform.localScale.y / 2),this);
-		down = new AttachPoint(new Vector3(transform.position.x,transform.position.y - transform.localScale.y / 2),this);
+		up = new AttachPoint(new Vector3(transform.position.x,transform.position.y + transform.localScale.y / 2),this,"up");
+		down = new AttachPoint(new Vector3(transform.position.x,transform.position.y - transform.localScale.y / 2),this,"down");
 	}
 
 	void Update()
