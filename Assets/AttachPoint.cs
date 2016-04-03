@@ -59,7 +59,7 @@ public class AttachPoint : MonoBehaviour
             {
                 Attach();
             }
-            else if (isAttached == true && transform.parent.GetComponent<ShipPart>().IsRoot() == false && transform.parent.parent != null)
+            else if (isAttached == true && transform.parent.parent != null)
             {
                 Detach();
             }

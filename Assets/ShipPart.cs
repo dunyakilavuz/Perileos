@@ -11,7 +11,6 @@ public class ShipPart : MonoBehaviour
 	[SerializeField]
     bool isRoot = false;
 	bool isSelected = false;
-	Vector3 locatedInShip;
 
 	void Start()
 	{
@@ -29,11 +28,6 @@ public class ShipPart : MonoBehaviour
 		return isSelected;
 	}
 
-    public bool IsRoot()
-    {
-        return isRoot;
-    }
-
     public void select()
 	{
 		isSelected = true;
@@ -44,14 +38,6 @@ public class ShipPart : MonoBehaviour
 		isSelected = false;
 	}
 
-    public void makeRoot()
-    {
-        isRoot = true;
-    }
-    public void revokeRoot()
-    {
-        isRoot = false;
-    }
 
 	
 }

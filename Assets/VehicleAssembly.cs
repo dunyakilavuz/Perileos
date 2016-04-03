@@ -10,6 +10,8 @@ public class VehicleAssembly : MonoBehaviour
 	RaycastHit rayCastHit;
 	public bool attachingMode;
 	public SpaceShip spaceShip;
+	public SpaceShip savedSpaceShip;
+	public GameObject partsMenu;
 
 	void Start () 
 	{
@@ -65,7 +67,7 @@ public class VehicleAssembly : MonoBehaviour
 
 			if(spaceShip.shipParts.Count == 0)
 			{
-				GameObject.Find ("PartsMenu").GetComponent<PartsMenu> ().isFirstPartSelection = true;
+				partsMenu.GetComponent<PartsMenu> ().isFirstPartSelection = true;
 			}
 		}
 	}
@@ -73,11 +75,28 @@ public class VehicleAssembly : MonoBehaviour
 	public void Save()
 	{
 		Debug.Log ("Save button clicked.");
-		
+		savedSpaceShip = new SpaceShip ();
+		savedSpaceShip.partIndex = new int[spaceShip.shipParts.Count];
+		int value;
+		for (int i = 0; i < spaceShip.shipParts.Count; i++) 
+		{
+			int.TryParse (spaceShip.shipParts[i].name, out value);
+			savedSpaceShip.partIndex[i] = value;
+		}
 	}
 
 	public void Load()
 	{
 		Debug.Log ("Load button clicked.");
+		ShipPart root;
+		ShipPart temp;
+
+		root = (ShipPart)Instantiate(partsMenu.GetComponent<PartsMenu>().partList[savedSpaceShip.partIndex[0]], (Vector2)(Camera.main.transform.position), Quaternion.identity);
+
+		for (int i = 1; i < savedSpaceShip.partIndex.Length; i++) 
+		{
+			temp = (ShipPart)Instantiate(partsMenu.GetComponent<PartsMenu>().partList[savedSpaceShip.partIndex[i]], (Vector2)(Camera.main.transform.position), Quaternion.identity);
+			temp.name = savedSpaceShip.partIndex[i].ToString();
+		}
 	}
 }

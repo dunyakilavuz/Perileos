@@ -12,6 +12,7 @@ public class MenuClick : MonoBehaviour
 		                                                                                               (Vector2)(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Quaternion.identity);
 		GameObject.Find ("Assembly Manager").GetComponent<VehicleAssembly> ().focusedPart.select ();
 		GameObject.Find ("Assembly Manager").GetComponent<VehicleAssembly> ().attachingMode = true;
+		GameObject.Find ("Assembly Manager").GetComponent<VehicleAssembly> ().focusedPart.name = value.ToString();
 
 		if (GameObject.Find ("PartsMenu").GetComponent<PartsMenu> ().isFirstPartSelection == true) 
 		{

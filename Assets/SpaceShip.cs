@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class SpaceShip
 {
 	public List<ShipPart> shipParts = new List<ShipPart> ();
+	public int[] partIndex;
 	ShipPart rootPart;
 	string shipName;
 
