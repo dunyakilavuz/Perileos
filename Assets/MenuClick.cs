@@ -13,6 +13,11 @@ public class MenuClick : MonoBehaviour
 		GameObject.Find ("Assembly Manager").GetComponent<VehicleAssembly> ().focusedPart.select ();
 		GameObject.Find ("Assembly Manager").GetComponent<VehicleAssembly> ().attachingMode = true;
 
+		if (GameObject.Find ("PartsMenu").GetComponent<PartsMenu> ().isFirstPartSelection == true) 
+		{
+			GameObject.Find("Assembly Manager").GetComponent<VehicleAssembly>().spaceShip.shipParts.Add(GameObject.Find("Assembly Manager").GetComponent<VehicleAssembly>().focusedPart);
+			GameObject.Find ("PartsMenu").GetComponent<PartsMenu> ().isFirstPartSelection = false;
+		}
 
 	}
 

@@ -14,13 +14,12 @@ public class VehicleAssembly : MonoBehaviour
 	void Start () 
 	{
 		spaceShip = new SpaceShip();
-		spaceShip.shipParts.Add (rootPart);
 	}
 
 	void Update ()
 	{
 		PartSelection ();
-
+		DeleteParts ();
 	}
 
 
@@ -49,6 +48,24 @@ public class VehicleAssembly : MonoBehaviour
 			{
 				focusedPart.deselect();
 				attachingMode = false;
+			}
+		}
+	}
+
+	void DeleteParts()
+	{
+		if (attachingMode == true && Input.GetKeyDown (KeyCode.Delete)) 
+		{
+			Transform[] allChildren = focusedPart.GetComponentsInChildren<Transform>();
+			foreach (Transform child in allChildren) 
+			{
+				spaceShip.shipParts.Remove(child.GetComponent<ShipPart>());
+			}
+			Destroy(focusedPart.gameObject);
+
+			if(spaceShip.shipParts.Count == 0)
+			{
+				GameObject.Find ("PartsMenu").GetComponent<PartsMenu> ().isFirstPartSelection = true;
 			}
 		}
 	}

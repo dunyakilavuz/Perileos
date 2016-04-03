@@ -11,6 +11,7 @@ public class PartsMenu : MonoBehaviour
 	GameObject menuItemFrame;
 	float scaleItemFrame = 3;
 	GameObject temp2;
+	public bool isFirstPartSelection  = true;
 
 
 
@@ -49,8 +50,4 @@ public class PartsMenu : MonoBehaviour
 		}
 	}
 
-	void partSelect()
-	{
-
-	}
 }
