@@ -32,12 +32,13 @@ public class PartsMenu : MonoBehaviour
 		{
 			if (i % 2 == 0) 
 			{
-				temp2 = (GameObject)Instantiate(menuItemFrame, new Vector3 (-5, -i + 9, -1), Quaternion.identity);
+				temp2 = (GameObject)Instantiate(menuItemFrame, transform.position + (new Vector3(-0.7f,4-i ,0)), Quaternion.identity);
 			}
 			else 
 			{
-				temp2 = (GameObject)Instantiate(menuItemFrame,new Vector3(-3.5f,-i + 10,-1),Quaternion.identity);
+				temp2 = (GameObject)Instantiate(menuItemFrame,transform.position + (new Vector3(0.7f,4,0)),Quaternion.identity);
 			}
+
 			temp = (ShipPart)Instantiate (partList [i], new Vector3 (0, 0, 0), Quaternion.identity);
 			temp.name = i.ToString();
 			Destroy(temp.GetComponent<ShipPart>());
