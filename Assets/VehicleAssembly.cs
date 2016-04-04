@@ -88,15 +88,56 @@ public class VehicleAssembly : MonoBehaviour
 	public void Load()
 	{
 		Debug.Log ("Load button clicked.");
+		int[] serialID = new int[savedSpaceShip.partIndex.Length];
 		ShipPart root;
-		ShipPart temp;
+		ShipPart thisPart;
+		ShipPart otherPart;
+		AttachPoint thisPartAttachPoint;
+		AttachPoint otherPartAttachPoint;
+		int value;
 
 		root = (ShipPart)Instantiate(partsMenu.GetComponent<PartsMenu>().partList[savedSpaceShip.partIndex[0]], (Vector2)(Camera.main.transform.position), Quaternion.identity);
+		int.TryParse (root.name, out value);
+		root.name = (value + 100).ToString ();
+		int.TryParse (root.name, out value);
+		serialID [0] = value;
 
 		for (int i = 1; i < savedSpaceShip.partIndex.Length; i++) 
 		{
-			temp = (ShipPart)Instantiate(partsMenu.GetComponent<PartsMenu>().partList[savedSpaceShip.partIndex[i]], (Vector2)(Camera.main.transform.position), Quaternion.identity);
-			temp.name = savedSpaceShip.partIndex[i].ToString();
+			thisPart = (ShipPart)Instantiate(partsMenu.GetComponent<PartsMenu>().partList[savedSpaceShip.partIndex[i]], (Vector2)(Camera.main.transform.position), Quaternion.identity);
+			int.TryParse (thisPart.name, out value);
+			thisPart.name = (i + 100 + value).ToString();
+			int.TryParse (thisPart.tag, out value);
+			serialID [i] = value;
+			otherPart = GameObject.Find(serialID[thisPart.attachedToIndex].ToString()).GetComponent<ShipPart>();
+
+			if(thisPart.myAttachPoint == "attachPoint(up)")
+			{
+				thisPartAttachPoint = thisPart.transform.GetChild(0).GetComponent<AttachPoint>();
+			}
+			else if(thisPart.myAttachPoint == "attachPoint(down)")
+			{
+				thisPartAttachPoint = thisPart.transform.GetChild(1).GetComponent<AttachPoint>();
+			}
+			else
+			{
+				thisPartAttachPoint = null;
+			}
+
+			if(thisPart.targetAttachPoint == "attachPoint(up)")
+			{
+				otherPartAttachPoint = thisPart.transform.GetChild(0).GetComponent<AttachPoint>();
+			}
+			else if(thisPart.targetAttachPoint == "attachPoint(down)")
+			{
+				otherPartAttachPoint = thisPart.transform.GetChild(1).GetComponent<AttachPoint>();
+			}
+			else
+			{
+				otherPartAttachPoint = null;
+			}
+
+
 		}
 	}
 }

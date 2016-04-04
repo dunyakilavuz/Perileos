@@ -88,6 +88,10 @@ public class AttachPoint : MonoBehaviour
         transform.GetComponent<AttachPoint>().isAttached = true;
         otherAttachPoint.transform.GetComponent<AttachPoint>().isAttached = true;
 		AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Add (transform.parent.GetComponent<ShipPart>());
+		transform.parent.GetComponent<ShipPart>().attachedToIndex = 
+			AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.IndexOf(otherAttachPoint.transform.parent.GetComponent<ShipPart>());
+		transform.parent.GetComponent<ShipPart> ().myAttachPoint = transform.name;
+		transform.parent.GetComponent<ShipPart> ().targetAttachPoint = otherAttachPoint.transform.name;
 
 		Debug.Log("SpaceShip: " + AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Count);
     }

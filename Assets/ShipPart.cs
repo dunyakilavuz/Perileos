@@ -11,6 +11,9 @@ public class ShipPart : MonoBehaviour
 	[SerializeField]
     bool isRoot = false;
 	bool isSelected = false;
+	public int attachedToIndex;
+	public string targetAttachPoint;
+	public string myAttachPoint;
 
 	void Start()
 	{
