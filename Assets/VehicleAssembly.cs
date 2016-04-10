@@ -12,6 +12,8 @@ public class VehicleAssembly : MonoBehaviour
 	public SpaceShip spaceShip;
 	public SpaceShip savedSpaceShip;
 	public GameObject partsMenu;
+	int[] myAPoints;
+	int[] targetAPoints;
 
 	void Start () 
 	{
@@ -64,7 +66,7 @@ public class VehicleAssembly : MonoBehaviour
 				spaceShip.shipParts.Remove(child.GetComponent<ShipPart>());
 			}
 			Destroy(focusedPart.gameObject);
-
+			attachingMode = false;
 			if(spaceShip.shipParts.Count == 0)
 			{
 				partsMenu.GetComponent<PartsMenu> ().isFirstPartSelection = true;
@@ -83,17 +85,25 @@ public class VehicleAssembly : MonoBehaviour
 			int.TryParse (spaceShip.shipParts[i].name, out value);
 			savedSpaceShip.partIndex[i] = value;
 		}
+		myAPoints = new int[savedSpaceShip.myAttachPoint.Count];
+		targetAPoints = new int[savedSpaceShip.myAttachPoint.Count];
+
+		myAPoints = spaceShip.myAttachPoint.ToArray();
+		targetAPoints = spaceShip.targetAttachPoint.ToArray();
 	}
 
-	public void Load()
+	public IEnumerator Loader()
 	{
 		Debug.Log ("Load button clicked.");
 		int[] serialID = new int[savedSpaceShip.partIndex.Length];
+		AttachPoint thisPartAttachPoint = null;
+		AttachPoint otherPartAttachPoint = null;
+		ShipPart[] thisParts = new ShipPart[savedSpaceShip.partIndex.Length];
+		ShipPart[] otherParts = new ShipPart[savedSpaceShip.partIndex.Length];
+
 		ShipPart root;
-		ShipPart thisPart;
-		ShipPart otherPart;
-		AttachPoint thisPartAttachPoint;
-		AttachPoint otherPartAttachPoint;
+		ShipPart thisPart = null;
+		ShipPart otherPart = null;
 		int value;
 
 		root = (ShipPart)Instantiate(partsMenu.GetComponent<PartsMenu>().partList[savedSpaceShip.partIndex[0]], (Vector2)(Camera.main.transform.position), Quaternion.identity);
@@ -110,34 +120,42 @@ public class VehicleAssembly : MonoBehaviour
 			int.TryParse (thisPart.tag, out value);
 			serialID [i] = value;
 			otherPart = GameObject.Find(serialID[thisPart.attachedToIndex].ToString()).GetComponent<ShipPart>();
-
-			if(thisPart.myAttachPoint == "attachPoint(up)")
-			{
-				thisPartAttachPoint = thisPart.transform.GetChild(0).GetComponent<AttachPoint>();
-			}
-			else if(thisPart.myAttachPoint == "attachPoint(down)")
-			{
-				thisPartAttachPoint = thisPart.transform.GetChild(1).GetComponent<AttachPoint>();
-			}
-			else
-			{
-				thisPartAttachPoint = null;
-			}
-
-			if(thisPart.targetAttachPoint == "attachPoint(up)")
-			{
-				otherPartAttachPoint = thisPart.transform.GetChild(0).GetComponent<AttachPoint>();
-			}
-			else if(thisPart.targetAttachPoint == "attachPoint(down)")
-			{
-				otherPartAttachPoint = thisPart.transform.GetChild(1).GetComponent<AttachPoint>();
-			}
-			else
-			{
-				otherPartAttachPoint = null;
-			}
-
-
+			thisParts[i] = thisPart;
+			otherParts[i] = otherPart;
 		}
+			
+		yield return new WaitForEndOfFrame();
+
+		for (int i = 0; i < myAPoints.Length; i++) 
+		{
+			Transform[] children = thisParts[i+1].GetComponentsInChildren<Transform>();
+			
+			foreach(Transform child in children)
+			{
+				if ((child.name == "attachPoint(up)" && myAPoints[i] == 1) || (child.name == "attachPoint(down)" && myAPoints[i] == 2))
+				{
+					thisPartAttachPoint = child.GetComponent<AttachPoint>();
+				}
+			}
+
+			children = otherParts[i+1].GetComponentsInChildren<Transform>();
+			foreach(Transform child in children)
+			{
+				if ((child.name == "attachPoint(up)" && targetAPoints[i] == 1) || (child.name == "attachPoint(down)" && targetAPoints[i] == 2))
+				{
+					otherPartAttachPoint = child.GetComponent<AttachPoint>();
+				}
+			}
+
+
+			Debug.Log("i: " + i + "/" + myAPoints.Length);
+			thisPartAttachPoint.otherAttachPoint = otherPartAttachPoint;
+			thisPartAttachPoint.Attach();
+		}
+	}
+
+	public void Load()
+	{
+		StartCoroutine(Loader());
 	}
 }

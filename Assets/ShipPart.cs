@@ -12,8 +12,6 @@ public class ShipPart : MonoBehaviour
     bool isRoot = false;
 	bool isSelected = false;
 	public int attachedToIndex;
-	public string targetAttachPoint;
-	public string myAttachPoint;
 
 	void Start()
 	{

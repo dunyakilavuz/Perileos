@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AttachPoint : MonoBehaviour
 {
-	AttachPoint otherAttachPoint;
+	public AttachPoint otherAttachPoint;
 	Behaviour halo;
 	GameObject AssemblyManager;
     Vector3 newPosition;
@@ -66,7 +66,7 @@ public class AttachPoint : MonoBehaviour
         }
 	}
 
-	void Attach()
+	public void Attach()
 	{
         if (otherAttachPoint.transform.position.y < otherAttachPoint.transform.parent.position.y)
         {
@@ -90,8 +90,24 @@ public class AttachPoint : MonoBehaviour
 		AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Add (transform.parent.GetComponent<ShipPart>());
 		transform.parent.GetComponent<ShipPart>().attachedToIndex = 
 			AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.IndexOf(otherAttachPoint.transform.parent.GetComponent<ShipPart>());
-		transform.parent.GetComponent<ShipPart> ().myAttachPoint = transform.name;
-		transform.parent.GetComponent<ShipPart> ().targetAttachPoint = otherAttachPoint.transform.name;
+
+		if (transform.name == "attachPoint(up)")
+		{
+			AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.myAttachPoint.Add (1);
+		}
+		else if (transform.name == "attachPoint(down)")
+		{
+			AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.myAttachPoint.Add (2);
+		}
+
+		if (otherAttachPoint.transform.name == "attachPoint(up)")
+		{
+			AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.targetAttachPoint.Add (1);
+		}
+		else if (otherAttachPoint.transform.name == "attachPoint(down)")
+		{
+			AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.targetAttachPoint.Add (2);
+		}
 
 		Debug.Log("SpaceShip: " + AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Count);
     }
