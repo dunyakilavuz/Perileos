@@ -8,6 +8,6 @@ public class SpaceShip
 	public int[] partIndex;
 	public List<int> myAttachPoint = new List<int> ();
 	public List<int> targetAttachPoint = new List<int>();
-	string shipName;
+	public string shipName;
 
 }
