@@ -16,10 +16,11 @@ public class AttachPoint : MonoBehaviour
 		GameObject attachPoint = (GameObject)Instantiate(Resources.Load("attachPoint"));
 		attachPoint.transform.position = position;
 		attachPoint.transform.localScale = 
-			new Vector3(myParent.transform.localScale.x / 1.5f,myParent.transform.localScale.x / 1.5f,myParent.transform.localScale.x / 1.5f);
+			new Vector3(myParent.GetComponent<BoxCollider>().size.x / 1.5f,myParent.GetComponent<BoxCollider>().size.x / 1.5f,myParent.GetComponent<BoxCollider>().size.x / 1.5f);
 		attachPoint.transform.parent = myParent.transform;
 		myName = name;
 		attachPoint.name = "attachPoint(" + myName + ")";
+
 	}
 
 	void Start()
@@ -70,13 +71,13 @@ public class AttachPoint : MonoBehaviour
 	{
         if (otherAttachPoint.transform.position.y < otherAttachPoint.transform.parent.position.y)
         {
-            newPosition = otherAttachPoint.transform.position;
-            newPosition -= new Vector3(0, transform.parent.localScale.y / 2, 0);
+			newPosition = otherAttachPoint.transform.parent.position + otherAttachPoint.transform.parent.GetComponent<BoxCollider>().center;
+			newPosition -= new Vector3(0, (transform.parent.GetComponent<BoxCollider>().size.z + otherAttachPoint.transform.parent.GetComponent<BoxCollider>().size.z)/2, 0);
         }
         else
         {
-            newPosition = otherAttachPoint.transform.position;
-            newPosition += new Vector3(0, transform.parent.localScale.y / 2, 0);
+			newPosition = otherAttachPoint.transform.parent.position + otherAttachPoint.transform.parent.GetComponent<BoxCollider>().center;
+			newPosition += new Vector3(0, (transform.parent.GetComponent<BoxCollider>().size.z + otherAttachPoint.transform.parent.GetComponent<BoxCollider>().size.z)/2, 0);
         }
 
         transform.parent.position = newPosition;

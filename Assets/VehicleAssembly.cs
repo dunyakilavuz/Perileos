@@ -163,7 +163,7 @@ public class VehicleAssembly : MonoBehaviour
 			
 			for (int i = 0; i < savedSpaceShip.partIndex.Length; i++) 
 			{
-				thisPart = (ShipPart)Instantiate(partInstantiator.GetComponent<PartInstantiator>().partList[savedSpaceShip.partIndex[i]], (Vector2)(Camera.main.transform.position), Quaternion.identity);
+				thisPart = (ShipPart)Instantiate(partInstantiator.GetComponent<PartInstantiator>().partList[savedSpaceShip.partIndex[i]], (Vector2)(Camera.main.transform.position), Quaternion.Euler(-90,180,0));
 				int.TryParse (thisPart.name, out value);
 				thisPart.name = (i + 100 + value).ToString();
 				int.TryParse (thisPart.name, out value);

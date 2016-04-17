@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6b2bfc1cf0528804fba40881e4be1b6c
+guid: b07214bc5b288cf45aa8f55a370c490a
 timeCreated: 1460902677
 licenseType: Free
 ModelImporter:
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Cylinder
+    4300000: Cone
   materials:
     importMaterials: 1
     materialName: 0

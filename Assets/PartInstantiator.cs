@@ -12,7 +12,8 @@ public class PartInstantiator : MonoBehaviour
 	public void OnClicked(Button button)
 	{
 		int.TryParse (button.name, out value);
-		AssemblyManager.GetComponent<VehicleAssembly>().focusedPart = (ShipPart)Instantiate (partList[value],(Vector2)(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Quaternion.identity);
+		AssemblyManager.GetComponent<VehicleAssembly>().focusedPart = (ShipPart)Instantiate (partList[value],
+			(Vector2)(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Quaternion.Euler(-90,180,0));
 		AssemblyManager.GetComponent<VehicleAssembly> ().focusedPart.select ();
 		AssemblyManager.GetComponent<VehicleAssembly> ().attachingMode = true;
 		AssemblyManager.GetComponent<VehicleAssembly> ().focusedPart.name = value.ToString();
