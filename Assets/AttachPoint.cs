@@ -8,7 +8,6 @@ public class AttachPoint : MonoBehaviour
 	GameObject AssemblyManager;
     Vector3 newPosition;
 	string myName;
-
     public bool isAttached;
 
 	public AttachPoint(Vector3 position,ShipPart myParent, string name)
@@ -109,8 +108,6 @@ public class AttachPoint : MonoBehaviour
 		{
 			AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.targetAttachPoint.Add (2);
 		}
-
-		Debug.Log("SpaceShip: " + AssemblyManager.GetComponent<VehicleAssembly> ().spaceShip.shipParts.Count);
     }
 
 	void Detach()

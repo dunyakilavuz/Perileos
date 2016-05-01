@@ -19,9 +19,14 @@ public class VehicleAssembly : MonoBehaviour
 	public GameObject inputField;
 	public GameObject partInstantiator;
 	public GameObject savedShipPanel;
+	ShipPart[] thisParts; 
+	ShipPart[] otherParts;
+	AttachPoint thisPartAttachPoint;
+	AttachPoint otherPartAttachPoint;
 	public List<GameObject> buttonList;
 	public GameObject button;
 	public bool isFirstPartSelection = true;
+	GameObject loadedShip = null;
 
 	void Start () 
 	{
@@ -127,7 +132,6 @@ public class VehicleAssembly : MonoBehaviour
 			shipNamesAsArray = shipNamesAsList.ToArray();
 			PlayerPrefsX.SetStringArray("shipNamesAsArray",shipNamesAsArray);
 			PlayerPrefs.SetString("savedSpaceShip.shipName",savedSpaceShip.shipName);
-			Debug.Log(savedSpaceShip.shipName);
 			PlayerPrefsX.SetIntArray (savedSpaceShip.shipName + ".savedSpaceShip.partIndex", savedSpaceShip.partIndex);
 			PlayerPrefsX.SetIntArray (savedSpaceShip.shipName + ".myAPoints", myAPoints);
 			PlayerPrefsX.SetIntArray (savedSpaceShip.shipName + ".targetAPoints", targetAPoints);
@@ -145,17 +149,17 @@ public class VehicleAssembly : MonoBehaviour
 
 	public IEnumerator Loader()
 	{
-		if (savedSpaceShip.shipName != "") 
+		if (savedSpaceShip.shipName != "")
 		{
 			savedSpaceShip.partIndex = PlayerPrefsX.GetIntArray (savedSpaceShip.shipName + ".savedSpaceShip.partIndex");
 			myAPoints = PlayerPrefsX.GetIntArray (savedSpaceShip.shipName + ".myAPoints");
 			targetAPoints = PlayerPrefsX.GetIntArray(savedSpaceShip.shipName + ".targetAPoints");
 			
 			int[] serialID = new int[savedSpaceShip.partIndex.Length];
-			AttachPoint thisPartAttachPoint = null;
-			AttachPoint otherPartAttachPoint = null;
-			ShipPart[] thisParts = new ShipPart[savedSpaceShip.partIndex.Length];
-			ShipPart[] otherParts = new ShipPart[savedSpaceShip.partIndex.Length];
+			thisPartAttachPoint = null;
+			otherPartAttachPoint = null;
+			thisParts = new ShipPart[savedSpaceShip.partIndex.Length];
+			otherParts = new ShipPart[savedSpaceShip.partIndex.Length];
 			
 			ShipPart thisPart = null;
 			ShipPart otherPart = null;
@@ -171,6 +175,11 @@ public class VehicleAssembly : MonoBehaviour
 				otherPart = GameObject.Find(serialID[thisPart.attachedToIndex].ToString()).GetComponent<ShipPart>();
 				thisParts[i] = thisPart;
 				otherParts[i] = otherPart;
+
+				if (i == 0) 
+				{
+					loadedShip = thisPart.gameObject;
+				}
 			}
 			
 			yield return new WaitForEndOfFrame();
@@ -195,13 +204,10 @@ public class VehicleAssembly : MonoBehaviour
 						otherPartAttachPoint = child.GetComponent<AttachPoint>();
 					}
 				}
-				
-				Debug.Log("i: " + i + "/" + myAPoints.Length);
 				thisPartAttachPoint.otherAttachPoint = otherPartAttachPoint;
 				thisPartAttachPoint.Attach();
 				
 			}
-
 		}
 		else
 		{
@@ -249,5 +255,55 @@ public class VehicleAssembly : MonoBehaviour
 	public void Load()
 	{
 		StartCoroutine(Loader());
+	}
+
+	public void Run()
+	{
+		if (loadedShip != null) 
+		{
+			GameObject.DontDestroyOnLoad (loadedShip);
+
+			for (int i = 0; i < myAPoints.Length; i++) 
+			{
+				Transform[] children = thisParts[i+1].GetComponentsInChildren<Transform>();
+
+				foreach(Transform child in children)
+				{
+					if ((child.name == "attachPoint(up)" && myAPoints[i] == 1) || (child.name == "attachPoint(down)" && myAPoints[i] == 2))
+					{
+						thisPartAttachPoint = child.GetComponent<AttachPoint>();
+					}
+					if (child.GetComponent<AttachPoint>() != null)
+					{
+						child.GetComponent<AttachPoint> ().shouldActivate (false);
+					}
+
+				}
+
+				children = otherParts[i+1].GetComponentsInChildren<Transform>();
+				foreach(Transform child in children)
+				{
+					if ((child.name == "attachPoint(up)" && targetAPoints[i] == 1) || (child.name == "attachPoint(down)" && targetAPoints[i] == 2))
+					{
+						otherPartAttachPoint = child.GetComponent<AttachPoint>();
+					}
+					if (child.GetComponent<AttachPoint>() != null)
+					{
+						child.GetComponent<AttachPoint> ().shouldActivate (false);
+					}
+				}
+
+				thisPartAttachPoint.transform.parent.GetComponent<FixedJoint> ().connectedBody = otherPartAttachPoint.transform.parent.GetComponent<Rigidbody> ();
+				otherPartAttachPoint.transform.parent.GetComponent<FixedJoint> ().connectedBody = thisPartAttachPoint.transform.parent.GetComponent<Rigidbody> ();
+			}
+
+
+			Application.LoadLevel ("Launch Scene");
+
+		}
+		else 
+		{
+			Debug.Log ("Run failed.");
+		}
 	}
 }

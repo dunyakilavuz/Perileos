@@ -8,10 +8,12 @@ public class Planet : MonoBehaviour
 	Vector2 gravityVector;
 	[SerializeField]
 	float gravityMagnitude;
-	float gravityConstant = 6.6740831f * Mathf.Pow (10, -11);
+//	float gravityConstant = 6.6740831f * Mathf.Pow (10, -11);
+	float gravityConstant = 6.6740831f * Mathf.Pow (10, -7);
 	public Rigidbody[] gravityAffectedObjects;
 
-	float mass = Mathf.Pow(17,10);
+	[SerializeField]
+	float mass = Mathf.Pow(2,2);
 	float radius;
 
 	void Start () 
@@ -19,7 +21,7 @@ public class Planet : MonoBehaviour
 		radius = transform.localScale.x;
 	}
 
-	void Update () 
+	void FixedUpdate () 
 	{
 		applyGravity ();
 	}
