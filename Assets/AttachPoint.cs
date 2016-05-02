@@ -126,7 +126,7 @@ public class AttachPoint : MonoBehaviour
 
     public void shouldActivate(bool value)
     {
-        // We cant simply use SetActive function of gameobject class simply because it disables the objects update function.
+        // We can not simply use SetActive function of gameobject class, because it disables the objects update function.
         gameObject.GetComponent<MeshRenderer>().enabled = value;
         gameObject.GetComponent<SphereCollider>().enabled = value;
         halo.enabled = value;

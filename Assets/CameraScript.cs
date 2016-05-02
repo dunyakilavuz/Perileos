@@ -8,42 +8,42 @@ public class CameraScript : MonoBehaviour
 	public GameObject planet;
 	public GameObject focusedObject;
 
-	public int cameraMaxDistance = 15;
-	public int cameraMinDistance = 2;
+	int cameraMaxDistance = 50;
+	int cameraMinDistance = 4;
 	int rotateSpeed = 50;
+
+	Vector2 cameraHelperOriginalPos;
 
 	Vector3 mousePosBefore;
 
 	void Start () 
 	{
-	
+		cameraHelperOriginalPos = cameraHelper.transform.position;
 	}
 
 	void Update ()
 	{
-		if (Input.GetAxis("Mouse ScrollWheel") > 0 && mainCamera.GetComponent<Camera> ().orthographicSize >= cameraMinDistance)
+		if (Input.GetAxis("Mouse ScrollWheel") > 0 && mainCamera.GetComponent<Camera> ().orthographicSize > cameraMinDistance)
 		{
 			mainCamera.GetComponent<Camera> ().orthographicSize -= 1;
-			Debug.Log ("Forward");
-			Debug.Log (mainCamera.GetComponent<Camera> ().orthographicSize);
 		}
-		if (Input.GetAxis ("Mouse ScrollWheel") < 0 && mainCamera.GetComponent<Camera> ().orthographicSize <= cameraMaxDistance)
+		if (Input.GetAxis ("Mouse ScrollWheel") < 0 && mainCamera.GetComponent<Camera> ().orthographicSize < cameraMaxDistance)
 		{
 			mainCamera.GetComponent<Camera> ().orthographicSize += 1;
-			Debug.Log ("Backward");
-			Debug.Log (mainCamera.GetComponent<Camera> ().orthographicSize);
 		}
-
 		if (Input.GetMouseButtonDown (1)) 
 		{
-			Debug.Log ("true down");
 			mousePosBefore = Input.mousePosition;
 		}
-
 		if (Input.GetMouseButton (1)) 
 		{
-			Debug.Log ("true up");
 			cameraHelper.transform.RotateAround (planet.transform.position, Vector3.forward, (mousePosBefore.x - Input.mousePosition.x) / rotateSpeed);
 		}
+
+		cameraHelper.transform.position = new Vector3 (
+			Mathf.Lerp (focusedObject.transform.position.x, cameraHelperOriginalPos.x, mainCamera.GetComponent<Camera> ().orthographicSize / (cameraMaxDistance - cameraMinDistance)),
+			Mathf.Lerp (focusedObject.transform.position.y, cameraHelperOriginalPos.y, mainCamera.GetComponent<Camera> ().orthographicSize / (cameraMaxDistance - cameraMinDistance)),
+			cameraHelper.transform.position.z);
+
 	}
 }

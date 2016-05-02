@@ -292,9 +292,6 @@ public class VehicleAssembly : MonoBehaviour
 						child.GetComponent<AttachPoint> ().shouldActivate (false);
 					}
 				}
-
-				thisPartAttachPoint.transform.parent.GetComponent<FixedJoint> ().connectedBody = otherPartAttachPoint.transform.parent.GetComponent<Rigidbody> ();
-				otherPartAttachPoint.transform.parent.GetComponent<FixedJoint> ().connectedBody = thisPartAttachPoint.transform.parent.GetComponent<Rigidbody> ();
 			}
 
 

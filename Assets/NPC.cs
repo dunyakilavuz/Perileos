@@ -5,7 +5,7 @@ public class NPC : MonoBehaviour
 {
 	void Start () 
 	{
-	
+		Quest quest1 = new Quest ();
 	}
 
 	void Update () 
@@ -13,5 +13,19 @@ public class NPC : MonoBehaviour
 	
 	}
 
+
+}
+
+
+public class Quest
+{
+	public Quest()
+	{
+		
+	}
+
+	bool isFinished;
+	bool requirement;
+	string questDialogBox;
 
 }
