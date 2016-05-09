@@ -3,7 +3,15 @@ using System.Collections;
 
 public class ShipPart : MonoBehaviour 
 {
+	enum PartType
+	{
+		Capsule = 1,
+		FuelTank = 2,
+		RocketEngine = 3,
+	};
 
+	[SerializeField]
+	PartType thisPart;
 	string partName;
 	float mass;
 	AttachPoint down;
@@ -12,6 +20,9 @@ public class ShipPart : MonoBehaviour
     bool isRoot = false;
 	bool isSelected = false;
 	public int attachedToIndex;
+
+	int thrustCapacity;
+
 
 	void Start()
 	{
@@ -38,7 +49,5 @@ public class ShipPart : MonoBehaviour
 	{
 		isSelected = false;
 	}
-
-
-	
+		
 }

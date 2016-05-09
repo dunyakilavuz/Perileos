@@ -10,5 +10,4 @@ public class SpaceShip
 	public List<int> targetAttachPoint = new List<int>();
 	public string shipName;
 
-
 }

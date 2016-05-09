@@ -27,6 +27,7 @@ public class VehicleAssembly : MonoBehaviour
 	public GameObject button;
 	public bool isFirstPartSelection = true;
 	GameObject loadedShip = null;
+	float shipScaleVertical = 0;
 
 	void Start () 
 	{
@@ -38,7 +39,7 @@ public class VehicleAssembly : MonoBehaviour
 		{
 			shipNamesAsList.Add(shipNamesAsArray[i]);
 			GameObject newButton = Instantiate(button) as GameObject;
-			newButton.transform.parent = savedShipPanel.transform;
+			newButton.transform.SetParent(savedShipPanel.transform);
 			newButton.transform.GetChild(0).GetComponent<Text>().text = shipNamesAsList[i];
 			buttonList.Add(newButton);
 		}
@@ -180,6 +181,8 @@ public class VehicleAssembly : MonoBehaviour
 				{
 					loadedShip = thisPart.gameObject;
 				}
+
+				shipScaleVertical += thisPart.GetComponent<BoxCollider>().size.y;
 			}
 			
 			yield return new WaitForEndOfFrame();
@@ -204,9 +207,9 @@ public class VehicleAssembly : MonoBehaviour
 						otherPartAttachPoint = child.GetComponent<AttachPoint>();
 					}
 				}
+
 				thisPartAttachPoint.otherAttachPoint = otherPartAttachPoint;
-				thisPartAttachPoint.Attach();
-				
+				thisPartAttachPoint.Attach ();
 			}
 		}
 		else
@@ -261,39 +264,34 @@ public class VehicleAssembly : MonoBehaviour
 	{
 		if (loadedShip != null) 
 		{
-			GameObject.DontDestroyOnLoad (loadedShip);
 
-			for (int i = 0; i < myAPoints.Length; i++) 
+			for (int i = 0; i < thisParts.Length; i++) 
 			{
-				Transform[] children = thisParts[i+1].GetComponentsInChildren<Transform>();
-
-				foreach(Transform child in children)
+				if (thisParts [i] != loadedShip.GetComponent<ShipPart> ())
 				{
-					if ((child.name == "attachPoint(up)" && myAPoints[i] == 1) || (child.name == "attachPoint(down)" && myAPoints[i] == 2))
-					{
-						thisPartAttachPoint = child.GetComponent<AttachPoint>();
-					}
-					if (child.GetComponent<AttachPoint>() != null)
-					{
-						child.GetComponent<AttachPoint> ().shouldActivate (false);
-					}
-
+					Destroy (thisParts [i].GetComponent<Rigidbody> ());
 				}
-
-				children = otherParts[i+1].GetComponentsInChildren<Transform>();
-				foreach(Transform child in children)
+			}
+			for (int i = 0; i < otherParts.Length; i++) 
+			{
+				if (otherParts [i] != loadedShip.GetComponent<ShipPart> ())
 				{
-					if ((child.name == "attachPoint(up)" && targetAPoints[i] == 1) || (child.name == "attachPoint(down)" && targetAPoints[i] == 2))
-					{
-						otherPartAttachPoint = child.GetComponent<AttachPoint>();
-					}
-					if (child.GetComponent<AttachPoint>() != null)
-					{
-						child.GetComponent<AttachPoint> ().shouldActivate (false);
-					}
+					Destroy (otherParts [i].GetComponent<Rigidbody> ());
 				}
 			}
 
+			GameObject[] attachPoints = GameObject.FindGameObjectsWithTag ("attachPoint");
+			foreach(GameObject attachPoint in attachPoints)
+			{
+				Destroy (attachPoint);
+			}
+				
+
+
+			GameObject.DontDestroyOnLoad (loadedShip);
+			loadedShip.name = "loadedShip";
+			loadedShip.AddComponent<ShipController> ();
+			loadedShip.GetComponent<ShipController> ().verticalScaleOfShip = shipScaleVertical;
 
 			Application.LoadLevel ("Launch Scene");
 
