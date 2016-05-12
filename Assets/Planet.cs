@@ -26,7 +26,10 @@ public class Planet : MonoBehaviour
 	void Start () 
 	{
 		radius = transform.localScale.x;
-		gravityAffectedObjects.Add ( GameObject.Find ("loadedShip").GetComponent<Rigidbody> ());
+		if (GameObject.Find ("loadedShip") != null) 
+		{
+			gravityAffectedObjects.Add ( GameObject.Find ("loadedShip").GetComponent<Rigidbody> ());
+		}
 
 	}
 

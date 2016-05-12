@@ -28,7 +28,10 @@ public class GameManager : MonoBehaviour
 	{
 		planetTerritory ();
 
-		loadedShip.transform.parent = planetInTerritory.transform;
+		if(loadedShip != null)
+		{
+			loadedShip.transform.parent = planetInTerritory.transform;
+		}
 	}
 
 	void planetTerritory()

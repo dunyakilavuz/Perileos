@@ -4,15 +4,18 @@ using System.Collections;
 public class ShipController : MonoBehaviour 
 {
 	public float verticalScaleOfShip;
-	public float fuel = 10;
+	public float fuel = 50;
 	public float mass = 1;
-	public float thrustCapacity;
-	public float throttle;
+	public float thrustCapacity = 10;
+	public float throttle = 0;
+	float thrustAtMoment;
 	float rotateSpeed = 1;
+	GameObject[] engineFlames;
 
 	void Start ()
 	{
 		GetComponent<Rigidbody> ().mass = mass;
+		engineFlames = GameObject.FindGameObjectsWithTag ("rocketFlame");
 	}
 
 	void FixedUpdate ()
@@ -22,23 +25,28 @@ public class ShipController : MonoBehaviour
 
 	void Update()
 	{
-
 		RotateSpaceCraft ();
 	}
 
 	void ThrottleSpaceCraft()
 	{
-		GetComponent<Rigidbody> ().AddForce(transform.forward * throttle);
+		thrustAtMoment = thrustCapacity * throttle;
+
+		GetComponent<Rigidbody> ().AddForce(transform.forward * thrustAtMoment);
 
 		if (fuel > 0) 
 		{
-			if (Input.GetKey (KeyCode.LeftShift)/* && throttle < 1*/) 
+			if (Input.GetKey (KeyCode.LeftShift) && throttle < 1) 
 			{
-				throttle += 0.1f;
+				throttle += 0.05f;
 			}
 			if (Input.GetKey (KeyCode.LeftControl) && throttle > 0)
 			{
-				throttle -= 0.1f;
+				throttle -= 0.05f;
+			}
+			if (throttle < 0) 
+			{
+				throttle = 0;
 			}
 			if (Input.GetKey (KeyCode.Z)) 
 			{
@@ -48,19 +56,31 @@ public class ShipController : MonoBehaviour
 			{
 				throttle = 0;
 			}
-			/*
+
 			if(throttle > 0)
 			{
-				MainFlame.SetActive(true);
-				UpperFlame.SetActive(false);
+				for (int i = 0; i < engineFlames.Length; i++) 
+				{
+					if (engineFlames [i] != null) 
+					{
+						engineFlames [i].GetComponent<ParticleSystem> ().Play ();
+					}
+				}
 				fuel = fuel - throttle * 0.003f;
 			}
 			else
 			{
-				MainFlame.SetActive(false);
-				UpperFlame.SetActive(false);
+				for (int i = 0; i < engineFlames.Length; i++) 
+				{
+					if (engineFlames [i] != null) 
+					{
+						if (engineFlames [i] != null) 
+						{
+							engineFlames [i].GetComponent<ParticleSystem> ().Stop ();
+						}
+					}
+				}
 			}
-			*/
 		}
 	}
 	void RotateSpaceCraft()
@@ -73,5 +93,7 @@ public class ShipController : MonoBehaviour
 		{
 			transform.Rotate(0,-rotateSpeed,0);
 		}
+
+
 	}
 }
