@@ -11,6 +11,14 @@ public class ShipController : MonoBehaviour
 	float thrustAtMoment;
 	float rotateSpeed = 1;
 	GameObject[] engineFlames;
+	public SphereCollider shipTrigger;
+	[SerializeField]
+	public Collider shipTouchingWith;
+
+	void OnTriggerStay(Collider other)
+	{
+		shipTouchingWith = other;
+	}
 
 	void Start ()
 	{
@@ -93,7 +101,7 @@ public class ShipController : MonoBehaviour
 		{
 			transform.Rotate(0,-rotateSpeed,0);
 		}
-
-
 	}
+
+
 }

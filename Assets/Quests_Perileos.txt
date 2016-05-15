@@ -1,0 +1,150 @@
+Quest Giving Dialogue
+Returning Dialogue
+Landing Mission, Orbiting Mission, Surface Analyzing Mission
+
+Planet Upgrade
+
+
+
+Astronaut Rank
+
+ZONE
+
+Planet Ýsimleri
+
+Moon
+Agrann
+Crara D1FT 
+Vetriea D2FT
+Xeinope
+Pabbaeft
+
+Micah - Vehicle Assembly
+Ivan - City NPC
+____________________________________________________________________
+Quest Giving Dialogue 1
+
+Micah -
+Welcome back Astronaut X! So I have a quest for you, wanna hear about it?
+
+;Sure.
+;No thanks, I'll ask something else. 
+
+;; Sure
+
+- Good. So, It's pretty basic, but we need you to do it for essentials. I just want you to go to the moon. You can go there anytime you want to, your basic gear will be sufficient enough too. When you land on the mooni come back to me and I'll reward you handsomely.
+
+***New Quest Received - Land on the Moon. (Micah)***
+
+Quest Receiving Dialogue 1 (Negative)
+
+Micah - 
+Hey there! Still no moon-landing? I thought It was rather easy.
+
+Quest Receiving Dialogue 2 (Positive)
+
+Micah -
+Hey there! Oh you went to the moon and came back? Psh, I knew it was nothing for you. But a word is a word, so here's your reward. 
+
+________________________________________________________________
+
+Quest Giving Dialogue 2 
+
+Micah -
+Hello Astronaut X! I know its gonna be some fatigue duty, but I have another basic quest for you. You realized that you can hang on the orbits of the planets and stars didint you? If you haven't go try it fast, because this workload is about that this time. If you go to the moon and orbit around it, whole Project contributors will be pleased. I know, its super easy, but we need to show something to people, and its easy money.
+
+***New Quest Received - Orbit around the Moon. (Micah)***
+
+Quest Receiving Dialogue 2 (Negative)
+
+Micah -
+Welcome back sport! Oh you haven't finished the orbiting thing yet. It's fine, just come back when you're done so I'll tell everyone about it.
+
+Quest Receiving Dialogue 2 (Positive)
+
+Micah -
+My hello. And here's your reward. We kinda all watched how you orbited around the moon. Don't worry, we won't do it everytime, it was more like "Hey look benefactors. Your money is going to someplace good so don't worry." thing. By the way, you may want to visit Ivan, I heard he needs something from you.
+
+________________________________________________________________
+
+Quest Giving Dialogue 3
+
+Ivan - 
+Welcome Mister. I'm glad Micah told you about my needs to you. At least mentioned it, didin't he? Well I won't blabber much. The thing is, there are some well heeled people that wants some special "stones" that only you can bring to us. Moon stones, to be exact. I don't exactly know why some people are willing to pay for these rather plain stones, but well, money is money. If you want it, you can always go, grab some, and turn back for some cash. 
+
+
+***New Quest Received - Bring back moon stones. (Ivan)***
+
+Quest Receiving Dialogue 3 (Negative)
+
+Ivan- 
+No moon stones yet? It's fine. I still have no idea about this weird requisition anyway.
+
+Quest Receiving Dialogue 3 (Positive)
+
+Ivan-
+Oh my they may be plain, but even the thought about it is rather fancy actually. I learned why people want these also, It's just a show of money, not everyone can afford it, and people want to show off what they can buy. Sad, isn't it?
+
+_____________________________________________________________________
+
+Quest Giving Dialogue 4
+
+Micah - 
+Hey buddy! I don't know if you went to the closest planet to ours, Agrann, but I think its about time. Aggran is rather cold so be careful. With that suit on, it would be fine anyway but still. Anyway, you should go and see how the planet is. You will be the third astronaut to go there actually, it's kinda exciting! It may be rather hard to land on Agrann with your gear right now, so I won't ask you to land but you go and hang around the orbit a little bit, and when you come back, you will be our new national treasure. For the 3rd time. 
+
+
+***New Quest Received - Orbit around Agrann. (Micah)***
+
+Quest Receiving Dialogue 4 (Negative)
+
+Micah -
+Still didint go to Agrann? You can always visit Vehicle Assembly Building for better equipment you know that right?
+
+Quest Receiving Dialogue 4 (Positive)
+
+Micah - 
+Agrann looks way better than our moon right? The red glow makes it beautiful in my opinion. I remember Ivan not agreeing with me about it though. It's between us but, his favourite colour is blue, so he likes Crara D1FT, you know, the whole planet is kinda blueish. Don't tell him though he is kinda shy.
+
+________________________________________________________________________
+
+Quest Giving Dialogue 5
+
+Micah - 
+Welcome again! I just realized I forgot to tell you that you can take couple of quests at the same time. Well, not like 2 quests from me but you can take one from me and another from Ivan. It can be rather convenient, so try it! So, If we get back to this week's workload. You remember Agrann right? Well, I guess it's time for you to land. You're going to love the texture of the planet overall, it's some kind of a desert, but it feels different. Well, don't try to touch the sand with your bare hands though.
+
+
+***New Quest Received - Land on Agrann. (Micah)***
+
+Quest Receiving Dialogue 5 (Negative)
+
+Micah -
+I thought you'd already brought some Agrann sand back. I heard Aucreburg Republic's Chamber of Science wanted to analyze some sand. Although, none of my business, you should go talk with Ivan for that.
+
+ 
+Quest Receiving Dialogue 5 (Positive)
+
+Micah - 
+I knew you were so capable. You're one of our best astronauts you know that right? Well, the others still don't have an access system to assembly building like you do, but we're working on it. You may get some friends soon.
+
+_________________________________________________________________________
+
+
+Quest Giving Dialogue 6
+
+Ivan - 
+
+It's good to see you once more. Micah should've told you a little bit about Chamber of Science. Or maybe he didin't? Well the thing is, Chamber of Science of our great Republic have heard that you'd be visiting Agrann. And they want you to bring back some Agrann sand. I will provide the special urns for you. Only 2 urns, one is crucial, second is optional but you will receive extra if you bring both of them. Third urn will be the emergency one, in case one of them breaks you can use it. Good luck. 
+
+***New Quest Received - Bring Agrann sand for Ivan. (Ivan)***
+
+Quest Receiving Dialogue 6 (Negative)
+
+Ivan -
+Welcome back! Chamber of Science is getting rather impatient, but since it's a request, It's fine, you don't have to do it as soon as possible. They might want the urns back altought, so keep that in mind Mister.
+
+Quest Receiving Dialogue 6 (Positive)
+
+Ivan -
+These urns look heavy! Chamber will be pleased, Mister. You're such a promising astronaut. I know you're going to achieve great things. Also, Chamber might want more things from you, so be in touch with me would you?
+
+____________________________________________________________________________
