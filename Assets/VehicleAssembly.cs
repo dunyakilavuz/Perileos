@@ -28,6 +28,7 @@ public class VehicleAssembly : MonoBehaviour
 	public bool isFirstPartSelection = true;
 	GameObject loadedShip = null;
 	float shipScaleVertical = 0;
+	SphereCollider shipTrigger;
 
 	void Start () 
 	{
@@ -292,6 +293,12 @@ public class VehicleAssembly : MonoBehaviour
 			loadedShip.name = "loadedShip";
 			loadedShip.AddComponent<ShipController> ();
 			loadedShip.GetComponent<ShipController> ().verticalScaleOfShip = shipScaleVertical;
+			shipTrigger = loadedShip.AddComponent<SphereCollider> ();
+			shipTrigger.isTrigger = true;
+			shipTrigger.radius = shipScaleVertical;
+			shipTrigger.center -= new Vector3 (0, 0, shipScaleVertical / 2);
+
+			loadedShip.GetComponent<ShipController> ().shipTrigger = shipTrigger;
 
 			Application.LoadLevel ("Launch Scene");
 

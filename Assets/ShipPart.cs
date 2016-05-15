@@ -21,7 +21,7 @@ public class ShipPart : MonoBehaviour
 	bool isSelected = false;
 	public int attachedToIndex;
 
-	int thrustCapacity;
+	public int thrustCapacity;
 
 
 	void Start()

@@ -4,16 +4,21 @@ using System.Collections;
 public class GameManager : MonoBehaviour 
 {
 	public bool isLaunching = true;
-	GameObject loadedShip;
+	public GameObject loadedShip;
 	GameObject launchPad;
 	[SerializeField]
 	Planet[] planets;
 	public Planet planetInTerritory;
 
+	void Awake()
+	{
+		loadedShip = GameObject.Find ("loadedShip");
+	}
+
 	void Start () 
 	{
 		launchPad = GameObject.Find ("LaunchPad");
-		loadedShip = GameObject.Find ("loadedShip");
+
 
 		if (isLaunching == true && loadedShip != null) 
 		{
@@ -28,7 +33,10 @@ public class GameManager : MonoBehaviour
 	{
 		planetTerritory ();
 
-		loadedShip.transform.parent = planetInTerritory.transform;
+		if(loadedShip != null)
+		{
+			loadedShip.transform.parent = planetInTerritory.transform;
+		}
 	}
 
 	void planetTerritory()
