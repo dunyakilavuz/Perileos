@@ -64,7 +64,7 @@ public class CameraScript : MonoBehaviour
 		}
 		else 
 		{
-			minimapCamera.GetComponent<Camera> ().rect = new Rect (0.7f, 0.7f, 1, 1);
+			minimapCamera.GetComponent<Camera> ().rect = new Rect (0.7f, -0.7f, 1, 1);
 		}
 
 		if (focusedObject != null) 

@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
 			Altitude.text = "";
 			Throttle.text = "";
 			InTerritory.text = "";
+			GameObject.Find ("NPC").SetActive (false);
+			questNameText.GetComponent<Text> ().text = "Hello Astronaut X!";
+			questInfoText.GetComponent<Text> ().text = "You can go and create a ship from via clicking on the Vehicle Assembly Building!";
+			inputPanel.SetActive (false);
 		}
 	}
 
