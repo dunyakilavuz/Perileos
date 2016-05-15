@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
@@ -9,10 +10,39 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	Planet[] planets;
 	public Planet planetInTerritory;
+	public bool oldUserInput;
+	public int userInput = 0;
+
+	int frameCounter;
+	float timeTemp = 1;
+
+	public GameObject questNamePanel;
+	public GameObject questNameText;
+	public GameObject questInfoPanel;
+	public GameObject questInfoText;
+	public GameObject inputPanel;
+	public GameObject acceptButton;
+	public GameObject declineButton;
+
+	[SerializeField]
+	Text FPS;
+	[SerializeField]
+	Text Altitude;
+	[SerializeField]
+	Text Throttle;
+	[SerializeField]
+	Text InTerritory;
+
 
 	void Awake()
 	{
 		loadedShip = GameObject.Find ("loadedShip");
+		if (loadedShip == null) 
+		{
+			Altitude.text = "";
+			Throttle.text = "";
+			InTerritory.text = "";
+		}
 	}
 
 	void Start () 
@@ -32,6 +62,7 @@ public class GameManager : MonoBehaviour
 	void Update () 
 	{
 		planetTerritory ();
+		displayTexts ();
 
 		if(loadedShip != null)
 		{
@@ -53,5 +84,33 @@ public class GameManager : MonoBehaviour
 			}
 			planetInTerritory = planets [maxPos];
 		}
+	}
+
+	void displayTexts()
+	{
+		if (loadedShip != null)
+		{
+			Altitude.text = ((loadedShip.transform.position - planetInTerritory.transform.position).magnitude).ToString() + "meters.";
+			Throttle.text = "Throttle: " + (loadedShip.GetComponent<ShipController>().throttle * 100).ToString() + "%";
+			InTerritory.text = "We're in territory of " + planetInTerritory.name;
+		}
+
+		frameCounter++;
+		if (timeTemp <= Time.time)
+		{
+			FPS.text = "FPS: " + frameCounter;
+			frameCounter = 0;
+			timeTemp = Time.time + 1;
+		}
+	}
+
+
+	public void Accept()
+	{
+		userInput = 1;
+	}
+	public void Decline()
+	{
+		userInput = 2;
 	}
 }

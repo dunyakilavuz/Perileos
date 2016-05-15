@@ -4,13 +4,15 @@ using System.Collections;
 public class Quest : MonoBehaviour
 {
 	QuestType questType;
+	public bool isQuestAccepted = false;
 	public bool isActive = false;
 	public bool isFinished;
 	public bool isNeedsSatisfied;
-	string questName;
+
+	public string questName;
 	public string questGivingDialog;
-	string questOnDialog;
-	string questReturningDialog;
+	public string questOnDialog;
+	public string questReturningDialog;
 
 	public NPC takenFromNPC;
 	GameObject planetOfAction;
@@ -20,7 +22,7 @@ public class Quest : MonoBehaviour
 	public Quest(QuestType type,string questname ,string qGivingDialog, string onQuestDialog, string qReturningDialog, GameObject takenFrom, GameObject ship, GameObject planet)
 	{
 		questType = type;
-		questname = questname;
+		questName = questname;
 		questGivingDialog = qGivingDialog;
 		questOnDialog = onQuestDialog;
 		questReturningDialog = qReturningDialog;
@@ -60,7 +62,7 @@ public class Quest : MonoBehaviour
 		{
 			if (focusedShip != null) 
 			{
-				if (GameObject.Find("Game Manager").GetComponent<GameManager>().planetInTerritory == planetOfAction) 
+				if (GameObject.Find("Game Manager").GetComponent<GameManager>().planetInTerritory.gameObject == planetOfAction) 
 				{
 					isNeedsSatisfied = true;
 					Debug.Log ("Quest Finished");

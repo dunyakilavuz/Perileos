@@ -4,6 +4,8 @@ using System.Collections;
 public class CameraScript : MonoBehaviour 
 {
 	public GameObject mainCamera;
+	public GameObject minimapCamera;
+	public GameObject flock;
 	public GameObject cameraHelper;
 	public GameObject planet;
 	public GameObject focusedObject;
@@ -11,6 +13,8 @@ public class CameraScript : MonoBehaviour
 	int cameraMaxDistance = 50;
 	int cameraMinDistance = 4;
 	int rotateSpeed = 50;
+
+	bool mapMode;
 
 	Vector3 mousePosBefore;
 
@@ -22,6 +26,8 @@ public class CameraScript : MonoBehaviour
 		if (focusedObject != null) 
 		{
 			mainCamera.GetComponent<Camera> ().orthographicSize = 15;
+			flock.transform.position = new Vector3 (focusedObject.transform.position.x, focusedObject.transform.position.y, flock.transform.position.z);
+			flock.transform.parent = focusedObject.transform;
 		} 
 		else
 		{
@@ -47,11 +53,28 @@ public class CameraScript : MonoBehaviour
 		{
 			cameraHelper.transform.RotateAround (planet.transform.position, Vector3.forward, (mousePosBefore.x - Input.mousePosition.x) / rotateSpeed);
 		}
+		if (Input.GetKeyDown (KeyCode.M))
+		{
+			mapMode = !mapMode;
+		}
+
+		if (mapMode == true) 
+		{
+			minimapCamera.GetComponent<Camera> ().rect = new Rect (0, 0, 1, 1);
+		}
+		else 
+		{
+			minimapCamera.GetComponent<Camera> ().rect = new Rect (0.7f, 0.7f, 1, 1);
+		}
 
 		if (focusedObject != null) 
 		{
 			cameraHelper.transform.position = new Vector3 (focusedObject.transform.position.x, focusedObject.transform.position.y, cameraHelper.transform.position.z);
 		} 
+		else
+		{
+			minimapCamera.SetActive (false);
+		}
 
 	}
 }

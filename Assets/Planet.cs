@@ -16,7 +16,7 @@ public class Planet : MonoBehaviour
 
 	[SerializeField]
 	float mass;
-	float radius;
+	public float radius;
 
 	[SerializeField]
 	GameObject moonOrbit;
